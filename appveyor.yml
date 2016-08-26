@@ -1,0 +1,54 @@
+os: Visual Studio 2015
+environment:
+  environment: dev
+version: 1.0.{build}
+branches:
+  only:
+    - develop
+init:
+  - git config --global core.autocrlf input
+install:
+  - if not exist %APPVEYOR_BUILD_FOLDER%\nuget-latest-version appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+  - set PATH=nuget-latest-version\;%PATH%
+  - npm -g install npm@1
+  - npm install -g gulp
+  - npm install
+  - nuget sources
+  - gulp download-sonar-scanner
+nuget:
+  account_feed: true
+  disable_publish_on_pr: true
+cache:
+  - lib -> src\**\packages.config
+  - MSBuild.SonarQube.Runner-2.1
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}"
+  assembly_file_version: "{version}"
+  assembly_informational_version: "{version}"
+after_build:
+  - gulp run-sonar-analysis
+  - gulp package
+build_script:
+  - gulp build-with-coverage-report
+test:
+  assemblies:
+    - specs\**\*.Specs.dll
+artifacts:
+  # - path: deploy\Rewardle.Accounts.ViewStoreRebuilder*.zip
+  #   name: accounts_viewStoreRebuilder
+  - path: deploy\**\*.nupkg
+    name: nugetPackages
+
+deploy:
+  # - provider: Environment
+  #   name: Rewardle.Dev
+  #   artifacts: accounts_eventStoreRebuilder, accounts_viewStoreRebuilder, accounts_events, accounts_commands, accounts_api
+
+before_deploy:
+  - gulp deploy-nuget
+
+notifications:
+  - provider: Webhook
+    url: http://appharborservicehookendpoint.apphb.com/build/appveyor/ironhide

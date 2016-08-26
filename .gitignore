@@ -1,0 +1,84 @@
+.sass-cache/*
+codekit-config.json
+*.orig
+lib/
+deploy/
+specs/
+coverage/
+
+reports
+
+#developer-specific files
+localconfig.json
+connectionStrings.config
+mailSettings.config
+thumbs.db
+coverage.xml
+
+# Ignore Node & Bower
+###################
+node_modules
+bower_components
+build
+typings/
+#.tmp
+*.map.*
+*.js.map
+
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+#Visual Studio files
+.vs
+*.[Oo]bj
+*.user
+*.aps
+*.pch
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.[Cc]ache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.sdf
+*.opensdf
+*.unsuccessfulbuild
+ipch/
+obj/
+[Bb]in
+[Dd]ebug*/
+[Rr]elease*/
+
+Ankh.NoLoad
+
+#Tooling
+_ReSharper*/
+*.resharper
+*.DotSettings
+*.DotSettings.*
+[Tt]est[Rr]esult*
+
+#Build artifacts
+[Bb]uild/
+[Dd]eploy/
+report/coverage/
+coverage
+database_deployment
+
+#Subversion files
+.svn
+
+# Office Temp Files
+~$*
+
+/src/NovaEnergy.Presentation/local.config
+/src/DatabaseDeployer/local.config
